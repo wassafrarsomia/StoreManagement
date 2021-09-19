@@ -4,14 +4,18 @@ import {
   ADD_PRODUCT_TO_CART,
   DELETE_PRODUCT_FROM_CART,
   UPDATE_CART_AMOUNT,
-  GET_CATEGORY_LIST,
-  GET_RATING_LIST,
-  GET_BRAND_LIST,
+  GET_FORNISSUER_LIST,
+  GET_GAMME_LIST,
+  GET_SOUS_GAMME_LIST,
 } from "../actions/EcommerceActions";
 
 const initialState = {
   productList: [],
   cartList: [],
+  fournisseurs:[],
+  gammes:[],
+  sousGamme:[],
+  sousGammes:[]
 };
 
 const EcommerceReducer = function (state = initialState, action) {
@@ -22,22 +26,24 @@ const EcommerceReducer = function (state = initialState, action) {
         productList: [...action.payload],
       };
     }
-    case GET_CATEGORY_LIST: {
+    case GET_FORNISSUER_LIST: {
       return {
         ...state,
-        categoryList: [...action.payload],
+        fournisseurs: [...action.payload],
       };
     }
-    case GET_RATING_LIST: {
+    case GET_GAMME_LIST: {
+
       return {
         ...state,
-        ratingList: [...action.payload],
+        gammes: [...action.payload],
       };
     }
-    case GET_BRAND_LIST: {
+    case GET_SOUS_GAMME_LIST: {
+
       return {
         ...state,
-        brandList: [...action.payload],
+        sousGammes: [...action.payload],
       };
     }
     case GET_CART_LIST: {

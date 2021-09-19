@@ -17,7 +17,7 @@ const themes = createMatxThemes();
 
 export const MatxLayoutSettings = {
   activeLayout: "layout1", // layout1, layout2
-  activeTheme: "blue", // View all valid theme colors inside MatxTheme/themeColors.js
+  activeTheme: "purpleDark1", // View all valid theme colors inside MatxTheme/themeColors.js
   perfectScrollbar: true,
 
   themes: themes,
@@ -25,8 +25,8 @@ export const MatxLayoutSettings = {
   layout2Settings, // open Layout1/Layout2Settings.js
 
   secondarySidebar: {
-    show: true,
-    open: true,
+    show: false,
+    open: false,
     theme: "slateDark1", // View all valid theme colors inside MatxTheme/themeColors.js
   },
   // Footer options

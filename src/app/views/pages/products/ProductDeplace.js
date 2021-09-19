@@ -14,7 +14,7 @@ import * as yup from "yup";
 import AutoCompleteInput from "app/views/inputs/inputAutoComplete";
 import InputTextField from "app/views/inputs/inputTextField"
 import { useHistory } from "react-router";
-const ProductForm = () => {
+const ProductDeplace = () => {
   const handleSubmit = async (values, { isSubmitting }) => {
     console.log(values);
   };
@@ -22,18 +22,8 @@ const history=useHistory()
 
   return (
     <div className="m-sm-30">
-      <div className="mb-sm-30">
-        <Breadcrumb
-          routeSegments={[
-            { name: "Espace Produit", path: "/pages/product-list" },
-            { name: "Nouveau Produit" },
-          ]}
-        />
-      </div>
-
-      <Card elevation={3}>
         <div className="flex p-4">
-          <h4 className="m-0">Ajoutez Produit</h4>
+          <h4 className="m-0">Déplacer Produit</h4>
         </div>
         <Divider className="mb-6" />
 
@@ -55,30 +45,10 @@ const history=useHistory()
               <Grid container spacing={2} justify='flex-start'>
                 <Grid item xs={6} sm={6}>
                   <Field
-                      component={InputTextField}
-                      className="mb-4"
-                      label='Reference'
-                      name='reference'
-                      variant="outlined"
-                      size="small"
-                    />
-                </Grid>
-                <Grid item xs={6} sm={6}>
-                      <Field
-                      component={InputTextField}
-                      className="mb-4"
-                      label='Name'
-                      name='name'
-                      variant="outlined"
-                      size="small"
-                    />
-                         </Grid>
-                <Grid item xs={6} sm={6}>
-                  <Field
                       component={AutoCompleteInput}
-                      name="fournisseur"
+                      name="chantierOrigin"
                       className="mb-4"
-                      label="Fournisseur"
+                      label="Chantier Origine"
                       data={[]}
                       labelField="nom"
                       dataField="id"
@@ -89,42 +59,28 @@ const history=useHistory()
                 <Grid item xs={6} sm={6}>
                   <Field
                       component={AutoCompleteInput}
-                      label='Gamme'
-                      name='gamme'
+                      label='Chantier Destination'
+                      name='chantierDestination'
                       className="mb-4"
                       variant="outlined"
                       size="small"
                       labelField='nom'
                     />
                          </Grid>
-                <Grid item xs={6} sm={6}>
-                    <Field
-                      component={AutoCompleteInput}
-                      label='Sous Gamme'
-                      className="mb-4"
-                      name='sousGamme'
-                      labelField="nom"
-                      variant="outlined"
-                      size="small"
-                      data={[]}
-                    />
-                         </Grid>
+               
                 <Grid item xs={6} sm={6}>
                       <Field
-                      component={AutoCompleteInput}
-                      label='Unite'
+                      component={InputTextField}
+                      label='Qte'
                       className="mb-4"
-                      name='unite'
-                      labelField="nom"
-                      variant="outlined"
+                      name='qte'
                       size="small"
-                      data={[]}
                     />
                    </Grid>   
               </Grid>
-              <Grid container justify='flex-end'>
+              <Grid container spacing={2} justify='center'>
                 
-                <Grid item xs={2} sm={2}>
+                <Grid item xs={4} sm={4}>
                   <Button
                     className="mb-4 px-12"
                     variant="contained"
@@ -133,39 +89,29 @@ const history=useHistory()
                    Annuler
                   </Button>
                 </Grid>
-                <Grid item xs={2} sm={2}>
+                <Grid item xs={4} sm={4}>
                   <Button
                     className="mb-4 px-12"
                     variant="contained"
                     color="primary"
                     type="submit"
                   >
-                    Ajouter
+                    Déplacer
                   </Button>
                 </Grid>
               </Grid>
             </form>
           )}
         </Formik>
-      </Card>
     </div>
   );
 };
 
 const productSchema = yup.object().shape({
   name: yup.string().required("${path} is required"),
-  price: yup.number().required("${path} is required"),
-  category: yup.string().required("${path} is required"),
-  quantity: yup.number().required("${path} is required"),
 });
 
 const initialValues = {
-  name: "",
-  sku: "",
-  price: "",
-  category: "",
-  quantity: "",
 };
 
-const categoryList = ["Electronics", "Clothes", "Toys", "Books", "Utensils"];
-export default ProductForm;
+export default ProductDeplace;

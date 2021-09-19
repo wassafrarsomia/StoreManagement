@@ -3,11 +3,9 @@ import React, { Fragment, useContext } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { Hidden } from "@material-ui/core";
 import AppContext from "app/appContext";
-import Footer from "../SharedCompoents/Footer";
 import Layout2Navbar from "./Layout2Navbar";
 import Layout2Topbar from "./Layout2Topbar";
 import Scrollbar from "react-perfect-scrollbar";
-import SecondarySidebar from "../SharedCompoents/SecondarySidebar/SecondarySidebar";
 import { renderRoutes } from "react-router-config";
 import { useTheme } from "@material-ui/styles";
 import clsx from "clsx";
@@ -65,7 +63,7 @@ const Layout2 = () => {
             <Layout1Sidenav />
           </SidenavTheme>
         )}
-
+{/* 
         {settings.perfectScrollbar && (
           <Scrollbar
             options={{ suppressScrollX: true }}
@@ -74,9 +72,9 @@ const Layout2 = () => {
             <div className="flex-grow relative p-0">{renderRoutes(routes)}</div>
             {settings.footer.show && !settings.footer.fixed && <Footer />}
           </Scrollbar>
-        )}
+        )} */}
 
-        {!settings.perfectScrollbar && (
+        {/* {!settings.perfectScrollbar && (
           <div
             options={{ suppressScrollX: true }}
             className="flex-column flex-grow relative scroll-y p-0"
@@ -86,9 +84,8 @@ const Layout2 = () => {
           </div>
         )}
 
-        {settings.footer.show && settings.footer.fixed && <Footer />}
+        {settings.footer.show && settings.footer.fixed && <Footer />} */}
       </div>
-      {settings.secondarySidebar.show && <SecondarySidebar />}
     </Fragment>
   );
 };

@@ -112,7 +112,7 @@ const Layout1Topbar = () => {
               <Icon>menu</Icon>
             </IconButton>
 
-            <div className="hide-on-mobile">
+            {/* <div className="hide-on-mobile">
               <IconButton>
                 <Icon>mail_outline</Icon>
               </IconButton>
@@ -124,21 +124,23 @@ const Layout1Topbar = () => {
               <IconButton>
                 <Icon>star_outline</Icon>
               </IconButton>
-            </div>
+            </div> */}
           </div>
           <div className="flex items-center">
-            <MatxSearchBox />
+            {/* <MatxSearchBox />
 
             <NotificationBar />
             <NotificationBar2 />
-            <ShoppingCart />
+            <ShoppingCart /> */}
 
             <MatxMenu
               menuButton={
                 <div className={classes.userMenu}>
                   <Hidden xsDown>
                     <span>
-                      Hi <strong>{user.name}</strong>
+                      {/* Hi <strong>{user.name}</strong> */}
+                      Hi <strong>Badre</strong>
+
                     </span>
                   </Hidden>
                   <Avatar className="cursor-pointer" src={user.avatar} />

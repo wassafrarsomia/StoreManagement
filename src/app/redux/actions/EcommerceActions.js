@@ -2,10 +2,10 @@ import axios from "axios";
 
 export const GET_PRODUCT_LIST = "GET_PRODUCT_LIST";
 export const GET_CART_LIST = "GET_CART_LIST";
-export const GET_CATEGORY_LIST = "GET_CATEGORY_LIST";
+export const GET_FORNISSUER_LIST = "GET_FORNISSUER_LIST";
 export const GET_RATING_LIST = "GET_RATING_LIST";
-export const GET_BRAND_LIST = "GET_BRAND_LIST";
-
+export const GET_SOUS_GAMME_LIST = "GET_SOUS_GAMME_LIST";
+export const GET_GAMME_LIST ="GET_GAMME_LIST"
 export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
 export const DELETE_PRODUCT_FROM_CART = "DELETE_PRODUCT_FROM_CART";
 
@@ -20,28 +20,28 @@ export const getProductList = () => (dispatch) => {
   });
 };
 
-export const getCategoryList = () => (dispatch) => {
-  axios.get("/api/ecommerce/get-category-list").then((res) => {
+export const getFornisseurList = () => (dispatch) => {
+  axios.get("/manager/fournisseurs").then((res) => {
     dispatch({
-      type: GET_CATEGORY_LIST,
+      type: GET_FORNISSUER_LIST,
       payload: res.data,
     });
   });
 };
 
-export const getRatingList = () => (dispatch) => {
-  axios.get("/api/ecommerce/get-rating-list").then((res) => {
+export const getGammeList = () => (dispatch) => {
+  axios.get("/manager/gammes").then((res) => {
     dispatch({
-      type: GET_RATING_LIST,
+      type: GET_GAMME_LIST,
       payload: res.data,
     });
   });
 };
 
-export const getBrandList = () => (dispatch) => {
-  axios.get("/api/ecommerce/get-brand-list").then((res) => {
+export const getSousGamme = () => (dispatch) => {
+  axios.get("/manager/sousgammes").then((res) => {
     dispatch({
-      type: GET_BRAND_LIST,
+      type: GET_SOUS_GAMME_LIST,
       payload: res.data,
     });
   });

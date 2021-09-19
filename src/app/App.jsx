@@ -12,7 +12,7 @@ import routes from "./RootRoutes";
 import { Store } from "./redux/Store";
 import { GlobalCss, MatxSuspense } from "matx";
 import sessionRoutes from "./views/sessions/SessionRoutes";
-import landingRoutes from "./views/landing/LandingRoutes";
+// import landingRoutes from "./views/landing/LandingRoutes";
 import { AuthProvider } from "app/contexts/FirebaseAuthContext";
 import MatxLayout from "./MatxLayout/MatxLayoutSFC";
 import AuthGuard from "./auth/AuthGuard";
@@ -37,13 +37,13 @@ const App = () => {
                     ))}
 
                     {/* LANDING PAGES */}
-                    {landingRoutes.map((item, ind) => (
+                    {/* {landingRoutes.map((item, ind) => (
                       <Route
                         key={ind}
                         path={item.path}
                         component={item.component}
                       />
-                    ))}
+                    ))} */}
 
                     {/* AUTH PROTECTED PAGES */}
                     <AuthGuard>

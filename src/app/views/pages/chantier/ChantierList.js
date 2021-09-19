@@ -3,49 +3,24 @@ import { Breadcrumb } from "matx";
 import MUIDataTable from "mui-datatables";
 import { Grid, Grow, Icon, IconButton, TextField, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import ProductFilter from "./ProductFilter";
+import ChantierFilter from "./ChantierFilter";
 import { useHistory } from "react-router";
 
-const ProductList = () => {
+const ChantierList = () => {
   const history =useHistory()
   const columns = [
     {
-      name: "ref", // field name in the row object
-      label: "Reference", // column title that will be shown in table
+      name: "nom", // field name in the row object
+      label: "Nom", // column title that will be shown in table
       options: {
         filter: true,
       },
     },
     {
-      name: "name",
-      label: "Name",
-      options: {
-        filter: true,
-       
-      },
+      name: "chefChantier",
+      label: "Chef chantier"
     },
-    {
-      name: "four",
-      label: "Fournisseur",
-      options: {
-        filter: true,
-      }
-    },
-    {
-      name: "gam",
-      label: "Gamme",
-      options: {
-        filter: true,
-        
-      },
-    },
-    {
-      name: "sgam",
-      label: "Sous Gamme",
-      options: {
-        filter: true,
-      },
-    },
+  
     {
       name: "action",
       label: " ",
@@ -54,16 +29,14 @@ const ProductList = () => {
         customBodyRenderLite: (dataIndex) => (
           <div className="flex items-center">
             <div className="flex-grow"></div>
-            <Link to="/pages/new-product">
+            <Link to="/pages/new-customer">
               <IconButton>
                 <Icon>edit</Icon>
               </IconButton>
             </Link>
-            <Link to="/pages/product-details">
               <IconButton>
-                <Icon>arrow_right_alt</Icon>
+                <Icon>delete</Icon>
               </IconButton>
-            </Link>
           </div>
         ),
       },
@@ -76,11 +49,11 @@ const ProductList = () => {
         <Breadcrumb
           routeSegments={[
             { name: "Accueil", path: "/" },
-            { name: "Espace Produit" },
+            { name: "Espace Chantier" },
           ]}
         />
       </div>
-      <ProductFilter/>
+      <ChantierFilter/>
       <div className="overflow-auto">
       
         <div className="min-w-750">
@@ -92,14 +65,14 @@ const ProductList = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={()=>{history.push("/pages/new-product")}}
+                  onClick={()=>{history.push("/pages/new-chantier")}}
                   >
 
-                 Nouveau Produit
+                 Nouveau Chantier
                 </Button>
               </Grid>
             </Grid>}
-            data={productList}
+            data={chantierList}
             columns={columns}
             options={{
               //filterType: "textField",
@@ -122,24 +95,16 @@ const ProductList = () => {
   );
 };
 
-const productList = [
+const chantierList = [
   {
-    ref: "az12212",
-    name: "Cima",
-    four: "Soca",
-    gam:
-      "Plast",
-      sgam:"PVC"
+    nom: "chantier ",
+    chefChantier: "Chef A",
   },
   {
-    ref: "az12212",
-    name: "Cima",
-    four: "Soca",
-    gam:
-      "Plast",
-      sgam:"PVC"
+    nom: "chantier",
+    chefChantier: "Chef A",
   },
   
 ];
 
-export default ProductList;
+export default ChantierList;
