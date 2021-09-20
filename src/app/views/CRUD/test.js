@@ -1,16 +1,18 @@
-
 import React, { useState } from "react";
 import {
   Card,
+  Checkbox,
+  FormControlLabel,
   Grid,
   Button,
   CircularProgress,
-  TextField
 } from "@material-ui/core";
+import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import {MatxLogo, MatxDivider} from "matx";
 import { makeStyles } from "@material-ui/core/styles";
-// import history from "history.js";
+import history from "history.js";
 import clsx from "clsx";
-import { useHistory } from "react-router";
+import useAuth from "app/hooks/useAuth";
 
 const useStyles = makeStyles(({ palette, ...theme }) => ({
   cardHolder: {
@@ -78,16 +80,21 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
 }));
 
 const FirebaseLogin = () => {
-  const history =useHistory()
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({
     name: "badreKhalyly",
     password: "dummyPass",
   });
   const [message, setMessage] = useState("");
+  const { signInWithEmailAndPassword, signInWithGoogle } = useAuth();
 
   const classes = useStyles();
 
+  const handleChange = ({ target: { name, value } }) => {
+    let temp = { ...userInfo };
+    temp[name] = value;
+    setUserInfo(temp);
+  };
 
   const handleFormSubmit = async (event) => {
     setLoading(true);
@@ -117,29 +124,37 @@ const FirebaseLogin = () => {
               })}
             >
         <Grid container justify='center'>
+              <ValidatorForm onSubmit={handleFormSubmit}>
     
           <Grid item  xs={12}>
         
-               <TextField
+               <TextValidator
                   className="mb-6 w-full"
                   variant="outlined"
                   size="small"
                   label="Name"
+                  onChange={handleChange}
                   type="name"
                   name="name"
                   fullWidth
+                  value={userInfo.name}
                 />
            
           </Grid>
           <Grid item  xs={12}>
-                <TextField
+               
+                <TextValidator
                   className="mb-3 w-full"
                   label="Password"
                   variant="outlined"
                   fullWidth
                   size="small"
+                  onChange={handleChange}
+                  name="password"
                   type="password"
                   value={userInfo.password}
+                  validators={["required"]}
+                  errorMessages={["this field is required"]}
                 />
 
                
@@ -151,8 +166,7 @@ const FirebaseLogin = () => {
       variant="contained"
       color="primary"
       disabled={loading}
-      // type="submit"
-      onClick={() => history.push("/pages/new-product")}
+      type="submit"
       fullWidth
     >
      Login
@@ -163,7 +177,7 @@ const FirebaseLogin = () => {
         className={classes.buttonProgress}
       />
     )}
-               </Grid> 
+               </Grid>  </ValidatorForm>
 
         </Grid>
         </div>
@@ -174,4 +188,3 @@ const FirebaseLogin = () => {
 };
 
 export default FirebaseLogin;
-

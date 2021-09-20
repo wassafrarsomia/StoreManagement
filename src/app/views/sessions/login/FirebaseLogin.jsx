@@ -126,46 +126,14 @@ const FirebaseLogin = () => {
       )}
     >
       <Card className={classes.card}>
+      <div
+        className={clsx({
+          "p-8 h-full": true,
+          [classes.cardLeft]: true,
+        })}
+      >
         <Grid container>
-          <Grid item lg={6} md={6} sm={5} xs={12}>
-            <div
-              className={clsx({
-                "p-8 h-full": true,
-                [classes.cardLeft]: true,
-              })}
-            >
-              <div className={classes.logo}>
-                <MatxLogo className="mr-2"/> <span>MatX Pro</span> 
-              </div>
-              <h1 className={classes.mainTitle}>
-                Admin Dashboard
-              </h1>
-              <div className={classes.features}>
-                <div className="item">JWT, FireBase & Auth0 Authentication</div>
-                <div className="item">Clean & Organised code</div>
-                <div className="item">Limitless Pages & Components</div>
-              </div>
-              <span className="flex-grow"></span>
-              <div className="flex items-center">
-                {/* <span className="">Design & Developed By</span> */}
-                <a href="https://ui-lib.com/" target="_blank"><img className="h-32 w-32" src="/assets/images/logos/ui-lib.png" alt="UI Lib Logo"/></a>
-              </div>
-            </div>
-          </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={12}>
-            <div className="px-8 pt-8">
-              <Button
-                onClick={handleGoogleLogin}
-                variant="contained"
-                className={classes.socialButton}
-              >
-                <img src="/assets/images/logos/google.svg" alt="" />
-                Sign In With Google
-              </Button>
-            </div>
-
-            <MatxDivider className="mt-6 px-8" text="Or"/>
-
+          <Grid item  xs={12}>
             <div className="p-8 h-full relative">
               <ValidatorForm onSubmit={handleFormSubmit}>
                 <TextValidator
@@ -195,35 +163,20 @@ const FirebaseLogin = () => {
                   validators={["required"]}
                   errorMessages={["this field is required"]}
                 />
-                <FormControlLabel
-                  className="mb-3 min-w-288"
-                  name="agreement"
-                  onChange={handleChange}
-                  control={
-                    <Checkbox
-                      size="small"
-                      onChange={({ target: { checked } }) =>
-                        handleChange({
-                          target: { name: "agreement", value: checked },
-                        })
-                      }
-                      checked={userInfo.agreement || true}
-                    />
-                  }
-                  label="Remeber me"
-                />
+              
 
                 {message && <p className="text-error">{message}</p>}
 
                 <div className="flex flex-wrap items-center mb-4">
-                  <div className="relative">
+               
                     <Button
                       variant="contained"
                       color="primary"
                       disabled={loading}
                       type="submit"
+                      fullWidth
                     >
-                      Sign in
+                      LogIn
                     </Button>
                     {loading && (
                       <CircularProgress
@@ -231,25 +184,13 @@ const FirebaseLogin = () => {
                         className={classes.buttonProgress}
                       />
                     )}
-                  </div>
-                  <span className="mr-2 ml-5">or</span>
-                  <Button
-                    className="capitalize"
-                    onClick={() => history.push("/session/signup")}
-                  >
-                    Sign up
-                  </Button>
                 </div>
-                <Button
-                  className="text-primary"
-                  onClick={() => history.push("/session/forgot-password")}
-                >
-                  Forgot password?
-                </Button>
+                
               </ValidatorForm>
             </div>
           </Grid>
         </Grid>
+        </div>
       </Card>
     </div>
   );
