@@ -99,7 +99,7 @@ const ProductList = () => {
                 </Button>
               </Grid>
             </Grid>}
-            data={productList}
+            data={[]}
             columns={columns}
             options={{
               //filterType: "textField",
@@ -122,24 +122,6 @@ const ProductList = () => {
   );
 };
 
-const productList = [
-  {
-    ref: "az12212",
-    name: "Cima",
-    four: "Soca",
-    gam:
-      "Plast",
-      sgam:"PVC"
-  },
-  {
-    ref: "az12212",
-    name: "Cima",
-    four: "Soca",
-    gam:
-      "Plast",
-      sgam:"PVC"
-  },
-  
-];
+
 
 export default ProductList;

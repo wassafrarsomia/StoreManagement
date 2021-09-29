@@ -8,9 +8,9 @@ export const GET_SOUS_GAMME_LIST = "GET_SOUS_GAMME_LIST";
 export const GET_GAMME_LIST ="GET_GAMME_LIST"
 export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
 export const DELETE_PRODUCT_FROM_CART = "DELETE_PRODUCT_FROM_CART";
-
+export const GET_UNIT_LIST="GET_UNIT_LIST"
 export const UPDATE_CART_AMOUNT = "UPDATE_CART_AMOUNT";
-
+export const SAVE_PRODUCT ='SAVE_PRODUCT'
 export const getProductList = () => (dispatch) => {
   axios.get("/api/ecommerce/get-product-list").then((res) => {
     dispatch({
@@ -21,16 +21,24 @@ export const getProductList = () => (dispatch) => {
 };
 
 export const getFornisseurList = () => (dispatch) => {
-  axios.get("/manager/fournisseurs").then((res) => {
+  axios.get("http://localhost:8080/manager/fournisseurs").then((res) => {
     dispatch({
       type: GET_FORNISSUER_LIST,
       payload: res.data,
     });
   });
 };
-
+export const saveProduct = (values) => (dispatch) => {
+  axios.post("http://localhost:8080/manager/products",values).then((res) => {
+    dispatch({
+      type: SAVE_PRODUCT,
+      payload: res.data,
+    });
+    return res.data
+  });
+};
 export const getGammeList = () => (dispatch) => {
-  axios.get("/manager/gammes").then((res) => {
+  axios.get("http://localhost:8080/manager/gammes").then((res) => {
     dispatch({
       type: GET_GAMME_LIST,
       payload: res.data,
@@ -39,9 +47,17 @@ export const getGammeList = () => (dispatch) => {
 };
 
 export const getSousGamme = () => (dispatch) => {
-  axios.get("/manager/sousgammes").then((res) => {
+  axios.get("http://localhost:8080/manager/sousgammes").then((res) => {
     dispatch({
       type: GET_SOUS_GAMME_LIST,
+      payload: res.data,
+    });
+  });
+};
+export const getUnits = () => (dispatch) => {
+  axios.get("http://localhost:8080/manager/units").then((res) => {
+    dispatch({
+      type: GET_UNIT_LIST,
       payload: res.data,
     });
   });

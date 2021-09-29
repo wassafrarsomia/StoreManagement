@@ -8,18 +8,48 @@ import {
   MenuItem,
   TextField,
 } from "@material-ui/core";
-import { Breadcrumb } from "matx";
+import { Breadcrumb, ConfirmationDialog } from "matx";
 import { Field, Formik } from "formik";
 import * as yup from "yup";
 import AutoCompleteInput from "app/views/inputs/inputAutoComplete";
 import InputTextField from "app/views/inputs/inputTextField"
 import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { getFornisseurList, getGammeList, getSousGamme, getUnits, saveProduct } from "app/redux/actions/EcommerceActions";
 const ProductForm = () => {
-  const handleSubmit = async (values, { isSubmitting }) => {
-    console.log(values);
-  };
-const history=useHistory()
 
+const history=useHistory()
+const dispatch = useDispatch()
+const [open, setOpen]=useState(false)
+useEffect(() => {
+    dispatch(getFornisseurList())
+    dispatch(getGammeList())
+    dispatch(getSousGamme())
+    dispatch(getUnits())
+
+
+    }, []);
+const { fournisseurs , gammes, sousGammes,unites } = useSelector((state) =>{
+ 
+  return ( {
+      fournisseurs :state.ecommerce.fournisseurs,
+      gammes :  state.ecommerce?.gammes,
+      sousGammes:state.ecommerce?.sousGammes ,
+      unites:state.ecommerce.unites})});
+
+  const handleSubmit = async (values) => {
+    console.log(values);
+  await  dispatch(saveProduct(values)).then(
+      res => {
+        console.log('ress', res)
+        if(res.id){
+          setOpen(true)
+        }
+      }
+    )
+    setOpen(true)
+  };
+  console.log('rrrrt', gammes)
   return (
     <div className="m-sm-30">
       <div className="mb-sm-30">
@@ -68,7 +98,7 @@ const history=useHistory()
                       component={InputTextField}
                       className="mb-4"
                       label='Name'
-                      name='name'
+                      name='username'
                       variant="outlined"
                       size="small"
                     />
@@ -79,7 +109,7 @@ const history=useHistory()
                       name="fournisseur"
                       className="mb-4"
                       label="Fournisseur"
-                      data={[]}
+                      data={fournisseurs}
                       labelField="nom"
                       dataField="id"
                       size="small"
@@ -91,10 +121,10 @@ const history=useHistory()
                       component={AutoCompleteInput}
                       label='Gamme'
                       name='gamme'
-                      className="mb-4"
                       variant="outlined"
                       size="small"
                       labelField='nom'
+                      data={gammes}
                     />
                          </Grid>
                 <Grid item xs={6} sm={6}>
@@ -106,7 +136,7 @@ const history=useHistory()
                       labelField="nom"
                       variant="outlined"
                       size="small"
-                      data={[]}
+                      data={sousGammes}
                     />
                          </Grid>
                 <Grid item xs={6} sm={6}>
@@ -114,11 +144,11 @@ const history=useHistory()
                       component={AutoCompleteInput}
                       label='Unite'
                       className="mb-4"
-                      name='unite'
+                      name='unit'
                       labelField="nom"
                       variant="outlined"
                       size="small"
-                      data={[]}
+                      data={unites}
                     />
                    </Grid>   
               </Grid>
@@ -148,24 +178,15 @@ const history=useHistory()
           )}
         </Formik>
       </Card>
+      <ConfirmationDialog open={open} text={"Ajout effectuée avec succès"}/>
     </div>
   );
 };
 
 const productSchema = yup.object().shape({
-  name: yup.string().required("${path} is required"),
-  price: yup.number().required("${path} is required"),
-  category: yup.string().required("${path} is required"),
-  quantity: yup.number().required("${path} is required"),
 });
 
 const initialValues = {
-  name: "",
-  sku: "",
-  price: "",
-  category: "",
-  quantity: "",
 };
 
-const categoryList = ["Electronics", "Clothes", "Toys", "Books", "Utensils"];
 export default ProductForm;

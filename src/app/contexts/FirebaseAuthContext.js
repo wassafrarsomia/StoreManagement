@@ -45,7 +45,9 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialAuthState);
 
   const signInWithEmailAndPassword = (email, password) => {
+    console.log("teeee",firebase.auth().signInWithEmailAndPassword(email, password))
     return firebase.auth().signInWithEmailAndPassword(email, password);
+
   };
 
   const signInWithGoogle = () => {

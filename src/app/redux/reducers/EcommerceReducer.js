@@ -7,6 +7,7 @@ import {
   GET_FORNISSUER_LIST,
   GET_GAMME_LIST,
   GET_SOUS_GAMME_LIST,
+  GET_UNIT_LIST,
 } from "../actions/EcommerceActions";
 
 const initialState = {
@@ -14,8 +15,8 @@ const initialState = {
   cartList: [],
   fournisseurs:[],
   gammes:[],
-  sousGamme:[],
-  sousGammes:[]
+  sousGammes:[],
+  unites:[]
 };
 
 const EcommerceReducer = function (state = initialState, action) {
@@ -27,29 +28,30 @@ const EcommerceReducer = function (state = initialState, action) {
       };
     }
     case GET_FORNISSUER_LIST: {
+      console.log('gggg',action.payload,action )
       return {
         ...state,
-        fournisseurs: [...action.payload],
+        fournisseurs:action.payload,
       };
     }
     case GET_GAMME_LIST: {
 
       return {
         ...state,
-        gammes: [...action.payload],
+        gammes:action.payload,
       };
     }
     case GET_SOUS_GAMME_LIST: {
 
       return {
         ...state,
-        sousGammes: [...action.payload],
+        sousGammes: action.payload,
       };
     }
-    case GET_CART_LIST: {
+    case GET_UNIT_LIST: {
       return {
         ...state,
-        cartList: [...action.payload],
+        unites:action.payload,
       };
     }
     case ADD_PRODUCT_TO_CART: {

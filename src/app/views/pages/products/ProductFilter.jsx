@@ -15,7 +15,7 @@ import { useDropzone } from "react-dropzone";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { getFornisseurList } from "app/redux/actions/EcommerceActions";
+import { getFornisseurList, getGammeList, getSousGamme } from "app/redux/actions/EcommerceActions";
 import AutoCompleteInput from "app/views/inputs/inputAutoComplete";
 import InputTextField from "app/views/inputs/inputTextField"
 const usestyles = makeStyles(({ palette, ...theme }) => ({
@@ -32,13 +32,18 @@ const ProductForm = () => {
 const dispatch = useDispatch()
 useEffect(() => {
     dispatch(getFornisseurList())
+    dispatch(getGammeList())
+    dispatch(getSousGamme())
+
     }, []);
-const { fournisseurs = [] } = useSelector((state) => state.ecommerce?.fournisseurs);
-const { gammes = [] } = useSelector((state) => state.ecommerce?.gammes);
+const { fournisseurs , gammes, sousGammes } = useSelector((state) =>{
+  console.log('rrrrt', state)
+  return ( {
+      fournisseurs :state.ecommerce.fournisseurs,
+      gammes :  state.ecommerce?.gammes,
+      sousGammes:state.ecommerce?.sousGammes })});
 
-const { sousGammes = [] } = useSelector((state) => state.ecommerce?.sousGammes);
-
-const fournisseurList =[];
+console.log('teet', fournisseurs,gammes, sousGammes)
 
   const handleSubmit = async (values, { isSubmitting }) => {
     console.log(values);
@@ -75,7 +80,7 @@ const fournisseurList =[];
 												component={AutoCompleteInput}
 												name="fournisseur"
 												label="Fournisseur"
-												data={[]}
+												data={fournisseurs}
 												labelField="nom"
 												dataField="id"
 												size="small"
@@ -91,7 +96,7 @@ const fournisseurList =[];
                     labelField="nom"
                     variant="outlined"
                     size="small"
-                    data={[]}
+                    data={sousGammes}
                   />
                   </Grid> 
                   <Grid item sm={3} xs={6}>
@@ -102,14 +107,15 @@ const fournisseurList =[];
                     variant="outlined"
                     size="small"
                     labelField='nom'
+                    data={gammes}
                   />
                   </Grid> 
                   <Grid item sm={3} xs={6}>
                   <Field
                     component={InputTextField}
                     className="mb-4"
-                    label='Reference'
-                    name='reference'
+                    label='Name'
+                    name='name'
                     variant="outlined"
                     size="small"
                   />

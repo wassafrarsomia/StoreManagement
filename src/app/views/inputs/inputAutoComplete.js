@@ -1,41 +1,39 @@
 import { FormControl, FormHelperText, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+import { useFormikContext } from 'formik';
 import React, { useEffect } from 'react';
-import { FieldAttributes, useField, useFormikContext } from "formik";
-const AutocompleteUi = props => {
-    const {
-        label,
-        forcedInitialValue,
-        variant = "outlined",
-        data,
-        labelField,
-        dataField,
-        multiple,
-        disabled,
-        className,
-        defaultValue,
-        loading,
-    } = props 
-        const [field, meta] = useField(props);
-console.log('ttt',meta )
+
+const AutocompleteUi = ({
+	field,
+	data,
+	Data,
+	labelField,
+	size,
+	variant,
+	forcedValue,
+	blank,
+	setBlank,
+	loading,
+	forcedInitialValue,
+	defaultValue,
+	forcedValueS,
+	forced,
+	label,
+	...rest
+}) => {
+	const{setFieldValue}=useFormikContext()
 	return (
-        <FormControl
-      error={false}
-        variant={variant || "outlined"}
-        size='small'
-        className={className}
-        fullWidth
-    >
+		<FormControl fullWidth >
 			<Autocomplete
 				id="combo-box_demo"
 				filterSelectedOptions
 				loading={loading}
-				options={data||[]}
+				options={data}
 				onFocus={field.onFocus}
 				value={field.value}
 				defaultValue={defaultValue}
 				onChange={(e, newValue) => {
-					field.onChange(newValue || '');
+					setFieldValue(field.name , newValue)
 				}}
 				getOptionLabel={(option) =>
 					option[labelField] !== undefined ? option[labelField] : ''
@@ -44,16 +42,12 @@ console.log('ttt',meta )
 					<TextField
 						{...params}
 						label={label}
-						// error={meta.touched && meta.touched}
 						variant={variant}
-						size="small"
+						size={size}
 					/>
 				)}
-				{...field}
+				{...rest}
 			/>
-	    {/* {meta.touched && meta.touched && (
-                <FormHelperText>{meta.error}</FormHelperText>
-            )} */}
 		</FormControl>
 	);
 };
