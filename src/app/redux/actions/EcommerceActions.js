@@ -5,12 +5,16 @@ export const GET_CART_LIST = "GET_CART_LIST";
 export const GET_FORNISSUER_LIST = "GET_FORNISSUER_LIST";
 export const GET_RATING_LIST = "GET_RATING_LIST";
 export const GET_SOUS_GAMME_LIST = "GET_SOUS_GAMME_LIST";
-export const GET_GAMME_LIST ="GET_GAMME_LIST"
+export const GET_GAMME_LIST = "GET_GAMME_LIST";
 export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
 export const DELETE_PRODUCT_FROM_CART = "DELETE_PRODUCT_FROM_CART";
-export const GET_UNIT_LIST="GET_UNIT_LIST"
+export const GET_UNIT_LIST = "GET_UNIT_LIST";
 export const UPDATE_CART_AMOUNT = "UPDATE_CART_AMOUNT";
-export const SAVE_PRODUCT ='SAVE_PRODUCT'
+export const SAVE_PRODUCT = "SAVE_PRODUCT";
+export const SEARCH_PRODUCT = "SEARCH_PRODUCT";
+
+export const URL_API = "http://localhost:8070";
+
 export const getProductList = () => (dispatch) => {
   axios.get("/api/ecommerce/get-product-list").then((res) => {
     dispatch({
@@ -21,24 +25,40 @@ export const getProductList = () => (dispatch) => {
 };
 
 export const getFornisseurList = () => (dispatch) => {
-  axios.get("http://localhost:8080/manager/fournisseurs").then((res) => {
+  axios.get(`${URL_API}/manager/fournisseurs`).then((res) => {
     dispatch({
       type: GET_FORNISSUER_LIST,
       payload: res.data,
     });
   });
 };
+
 export const saveProduct = (values) => (dispatch) => {
-  axios.post("http://localhost:8080/manager/products",values).then((res) => {
-    dispatch({
-      type: SAVE_PRODUCT,
-      payload: res.data,
+  return new Promise((resolve) => {
+    axios.post(`${URL_API}/manager/products`, values).then((res) => {
+      dispatch({
+        type: SAVE_PRODUCT,
+        payload: res.data,
+      });
+      resolve(res.data);
     });
-    return res.data
   });
 };
+
+export const searchProducts = (values) => (dispatch) => {
+  return new Promise((resolve) => {
+    axios.post(`${URL_API}/manager/productsCriteria`, values).then((res) => {
+      dispatch({
+        type: SEARCH_PRODUCT,
+        payload: res.data,
+      });
+      resolve(res.data);
+    });
+  });
+};
+
 export const getGammeList = () => (dispatch) => {
-  axios.get("http://localhost:8080/manager/gammes").then((res) => {
+  axios.get(`${URL_API}/manager/gammes`).then((res) => {
     dispatch({
       type: GET_GAMME_LIST,
       payload: res.data,
@@ -47,7 +67,7 @@ export const getGammeList = () => (dispatch) => {
 };
 
 export const getSousGamme = () => (dispatch) => {
-  axios.get("http://localhost:8080/manager/sousgammes").then((res) => {
+  axios.get(`${URL_API}/manager/sousgammes`).then((res) => {
     dispatch({
       type: GET_SOUS_GAMME_LIST,
       payload: res.data,
@@ -55,7 +75,7 @@ export const getSousGamme = () => (dispatch) => {
   });
 };
 export const getUnits = () => (dispatch) => {
-  axios.get("http://localhost:8080/manager/units").then((res) => {
+  axios.get(`${URL_API}/manager/units`).then((res) => {
     dispatch({
       type: GET_UNIT_LIST,
       payload: res.data,

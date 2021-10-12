@@ -8,41 +8,46 @@ import {
   GET_GAMME_LIST,
   GET_SOUS_GAMME_LIST,
   GET_UNIT_LIST,
+  SEARCH_PRODUCT,
 } from "../actions/EcommerceActions";
 
 const initialState = {
   productList: [],
   cartList: [],
-  fournisseurs:[],
-  gammes:[],
-  sousGammes:[],
-  unites:[]
+  fournisseurs: [],
+  gammes: [],
+  sousGammes: [],
+  unites: [],
 };
 
 const EcommerceReducer = function (state = initialState, action) {
   switch (action.type) {
+    case SEARCH_PRODUCT: {
+      return {
+        ...state,
+        products: action.payload,
+      };
+    }
     case GET_PRODUCT_LIST: {
       return {
         ...state,
-        productList: [...action.payload],
+        productList: action.payload,
       };
     }
     case GET_FORNISSUER_LIST: {
-      console.log('gggg',action.payload,action )
+      console.log("gggg", action.payload, action);
       return {
         ...state,
-        fournisseurs:action.payload,
+        fournisseurs: action.payload,
       };
     }
     case GET_GAMME_LIST: {
-
       return {
         ...state,
-        gammes:action.payload,
+        gammes: action.payload,
       };
     }
     case GET_SOUS_GAMME_LIST: {
-
       return {
         ...state,
         sousGammes: action.payload,
@@ -51,7 +56,7 @@ const EcommerceReducer = function (state = initialState, action) {
     case GET_UNIT_LIST: {
       return {
         ...state,
-        unites:action.payload,
+        unites: action.payload,
       };
     }
     case ADD_PRODUCT_TO_CART: {

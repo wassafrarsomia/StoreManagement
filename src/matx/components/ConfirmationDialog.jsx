@@ -5,7 +5,7 @@ const ConfirmationDialog = ({
   open,
   onConfirmDialogClose,
   text,
-  title = "confirm",
+  title = "Success",
   onYesClick,
 }) => {
   return (
@@ -20,16 +20,16 @@ const ConfirmationDialog = ({
             color="primary"
             onClick={onYesClick}
           >
-            Yes
+            Okay
           </Button>
-          <Button
+          {/* <Button
             className="m-2 rounded hover-bg-secondary px-6"
             variant="outlined"
             color="secondary"
             onClick={onConfirmDialogClose}
           >
             No
-          </Button>
+          </Button> */}
         </div>
       </div>
     </Dialog>
