@@ -12,13 +12,13 @@ import { Breadcrumb } from "matx";
 import { Field, Formik } from "formik";
 import * as yup from "yup";
 import AutoCompleteInput from "app/views/inputs/inputAutoComplete";
-import InputTextField from "app/views/inputs/inputTextField"
+import InputTextField from "app/views/inputs/inputTextField";
 import { useHistory } from "react-router";
 const ChantierForm = () => {
   const handleSubmit = async (values, { isSubmitting }) => {
     console.log(values);
   };
-const history=useHistory()
+  const history = useHistory();
 
   return (
     <div className="m-sm-30">
@@ -49,41 +49,41 @@ const history=useHistory()
             touched,
             handleChange,
             handleBlur,
-            handleSubmit
+            handleSubmit,
           }) => (
             <form className="px-4" onSubmit={handleSubmit}>
-              <Grid container spacing={2} justify='flex-start'>
+              <Grid container spacing={2} justify="flex-start">
                 <Grid item xs={6} sm={6}>
                   <Field
-                      component={InputTextField}
-                      className="mb-4"
-                      label='Nom'
-                      name='nom'
-                      variant="outlined"
-                      size="small"
-                    />
+                    component={InputTextField}
+                    className="mb-4"
+                    label="Nom"
+                    name="nom"
+                    variant="outlined"
+                    size="small"
+                  />
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                      <Field
-                      component={InputTextField}
-                      className="mb-4"
-                      label='Chef chantier'
-                      name='chefChantier'
-                      variant="outlined"
-                      size="small"
-                    />
-                         </Grid>
-               
-                         </Grid>
-              <Grid container justify='flex-end'>
-                
+                  <Field
+                    component={InputTextField}
+                    className="mb-4"
+                    label="Chef chantier"
+                    name="chefChantier"
+                    variant="outlined"
+                    size="small"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container justify="flex-end">
                 <Grid item xs={2} sm={2}>
                   <Button
                     className="mb-4 px-12"
                     variant="contained"
-                    onClick={()=>{history.push("/pages/chantier-list")}}
+                    onClick={() => {
+                      history.push("/pages/chantier-list");
+                    }}
                   >
-                   Annuler
+                    Annuler
                   </Button>
                 </Grid>
                 <Grid item xs={2} sm={2}>

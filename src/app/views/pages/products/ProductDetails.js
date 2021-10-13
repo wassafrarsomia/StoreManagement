@@ -102,15 +102,6 @@ const ProductDetails = () => {
   );
 };
 
-const chantierList = [
-  {
-    title: "Chantier",
-    value: "QTE",
-  },
-  {
-    title: "chantier",
-    value: "12",
-  },
-];
+const chantierList = [];
 
 export default ProductDetails;

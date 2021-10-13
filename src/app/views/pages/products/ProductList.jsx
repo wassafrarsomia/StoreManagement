@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Breadcrumb } from "matx";
+import { Breadcrumb, ConfirmationDialog } from "matx";
 import MUIDataTable from "mui-datatables";
 import {
   Grid,
@@ -12,11 +12,19 @@ import {
 import { Link } from "react-router-dom";
 import ProductFilter from "./ProductFilter";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteProduit,
+  searchProducts,
+} from "app/redux/actions/EcommerceActions";
 
 const ProductList = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [selectItem, setSelectItem] = useState();
+  const [open, setOpen] = useState(false);
+  const [idProduit, setIdProduit] = useState(0);
+
   const { products } = useSelector((state) => {
     return {
       products: state.ecommerce?.products,
@@ -29,6 +37,10 @@ const ProductList = () => {
   const handleEdit = (row) => {
     history.push("/pages/product-details");
     setSelectItem(row);
+  };
+  const handleDelete = (id) => {
+    setOpen(true);
+    setIdProduit(id);
   };
   console.log("teet", products);
   const columns = [
@@ -91,6 +103,9 @@ const ProductList = () => {
             <IconButton onClick={() => handleEdit(products[dataIndex])}>
               <Icon>edit</Icon>
             </IconButton>
+            <IconButton onClick={() => handleDelete(products[dataIndex]?.id)}>
+              <Icon>delete</Icon>
+            </IconButton>
             <IconButton onClick={() => handleConsult(products[dataIndex])}>
               <Icon>arrow_right_alt</Icon>
             </IconButton>
@@ -147,6 +162,20 @@ const ProductList = () => {
           />
         </div>
       </div>
+      <ConfirmationDialog
+        open={open}
+        onYesClick={() => {
+          dispatch(deleteProduit(idProduit));
+          setOpen(false);
+          dispatch(searchProducts({}));
+        }}
+        onConfirmDialogClose={() => {
+          setOpen(false);
+          setIdProduit(null);
+        }}
+        text={"Etes vous sûrs ?"}
+        ok={"oui"}
+      />
     </div>
   );
 };

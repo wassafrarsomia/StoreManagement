@@ -12,13 +12,25 @@ import { Breadcrumb } from "matx";
 import { Field, Formik } from "formik";
 import * as yup from "yup";
 import AutoCompleteInput from "app/views/inputs/inputAutoComplete";
-import InputTextField from "app/views/inputs/inputTextField"
+import InputTextField from "app/views/inputs/inputTextField";
 import { useHistory } from "react-router";
+import { saveFournisseur } from "app/redux/actions/EcommerceActions";
+import { useDispatch } from "react-redux";
+import ConfirmationDialog from "matx/components/ConfirmationDialog";
 const FournisseurForm = () => {
-  const handleSubmit = async (values, { isSubmitting }) => {
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (values) => {
     console.log(values);
+    await dispatch(saveFournisseur(values)).then((res) => {
+      console.log("ress", res);
+      if (res.id) {
+        setOpen(true);
+      }
+    });
   };
-const history=useHistory()
+  const history = useHistory();
 
   return (
     <div className="m-sm-30">
@@ -49,50 +61,51 @@ const history=useHistory()
             touched,
             handleChange,
             handleBlur,
-            handleSubmit
+            handleSubmit,
           }) => (
             <form className="px-4" onSubmit={handleSubmit}>
-              <Grid container spacing={2} justify='flex-start'>
+              <Grid container spacing={2} justify="flex-start">
                 <Grid item xs={6} sm={6}>
                   <Field
-                      component={InputTextField}
-                      className="mb-4"
-                      label='Nom'
-                      name='nom'
-                      variant="outlined"
-                      size="small"
-                    />
+                    component={InputTextField}
+                    className="mb-4"
+                    label="Nom"
+                    name="nom"
+                    variant="outlined"
+                    size="small"
+                  />
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                      <Field
-                      component={InputTextField}
-                      className="mb-4"
-                      label='Email'
-                      name='emial'
-                      variant="outlined"
-                      size="small"
-                    />
-                         </Grid>
+                  <Field
+                    component={InputTextField}
+                    className="mb-4"
+                    label="Email"
+                    name="email"
+                    variant="outlined"
+                    size="small"
+                  />
+                </Grid>
                 <Grid item xs={6} sm={6}>
-                <Field
-                      component={InputTextField}
-                      className="mb-4"
-                      label='Contact'
-                      name='contact'
-                      variant="outlined"
-                      size="small"
-                    />
-                         </Grid>
-                         </Grid>
-              <Grid container justify='flex-end'>
-                
+                  <Field
+                    component={InputTextField}
+                    className="mb-4"
+                    label="Contact"
+                    name="phone"
+                    variant="outlined"
+                    size="small"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container justify="flex-end">
                 <Grid item xs={2} sm={2}>
                   <Button
                     className="mb-4 px-12"
                     variant="contained"
-                    onClick={()=>{history.push("/pages/fournisseur-list")}}
+                    onClick={() => {
+                      history.push("/pages/fournisseur-list");
+                    }}
                   >
-                   Annuler
+                    Annuler
                   </Button>
                 </Grid>
                 <Grid item xs={2} sm={2}>
@@ -110,24 +123,18 @@ const history=useHistory()
           )}
         </Formik>
       </Card>
+      <ConfirmationDialog
+        open={open}
+        onYesClick={() => history.push("/pages/fournisseur-list")}
+        text={"Ajout effectuée avec succès"}
+        ok={"Okay"}
+      />
     </div>
   );
 };
 
-const fournisseurSchema = yup.object().shape({
-  name: yup.string().required("${path} is required"),
-  price: yup.number().required("${path} is required"),
-  category: yup.string().required("${path} is required"),
-  quantity: yup.number().required("${path} is required"),
-});
+const fournisseurSchema = yup.object().shape({});
 
-const initialValues = {
-  name: "",
-  sku: "",
-  price: "",
-  category: "",
-  quantity: "",
-};
+const initialValues = {};
 
-const categoryList = ["Electronics", "Clothes", "Toys", "Books", "Utensils"];
 export default FournisseurForm;

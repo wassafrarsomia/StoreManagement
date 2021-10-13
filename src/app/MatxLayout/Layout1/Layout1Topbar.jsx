@@ -12,7 +12,6 @@ import { setLayoutSettings } from "app/redux/actions/LayoutActions";
 import { MatxMenu, MatxSearchBox } from "matx";
 import NotificationBar from "../SharedCompoents/NotificationBar";
 import { Link } from "react-router-dom";
-import ShoppingCart from "../SharedCompoents/ShoppingCart";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { merge } from "lodash";
 import clsx from "clsx";
@@ -140,7 +139,6 @@ const Layout1Topbar = () => {
                     <span>
                       {/* Hi <strong>{user.name}</strong> */}
                       Hi <strong>Badre</strong>
-
                     </span>
                   </Hidden>
                   <Avatar className="cursor-pointer" src={user.avatar} />

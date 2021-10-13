@@ -49,7 +49,6 @@ const ProductForm = () => {
         setOpen(true);
       }
     });
-    setOpen(true);
   };
   console.log("rrrrt", gammes);
   return (
@@ -185,6 +184,7 @@ const ProductForm = () => {
         open={open}
         onYesClick={() => history.push("/pages/product-list")}
         text={"Ajout effectuée avec succès"}
+        ok={"Okay"}
       />
     </div>
   );

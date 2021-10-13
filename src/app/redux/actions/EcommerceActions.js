@@ -7,11 +7,14 @@ export const GET_RATING_LIST = "GET_RATING_LIST";
 export const GET_SOUS_GAMME_LIST = "GET_SOUS_GAMME_LIST";
 export const GET_GAMME_LIST = "GET_GAMME_LIST";
 export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
-export const DELETE_PRODUCT_FROM_CART = "DELETE_PRODUCT_FROM_CART";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const GET_UNIT_LIST = "GET_UNIT_LIST";
 export const UPDATE_CART_AMOUNT = "UPDATE_CART_AMOUNT";
 export const SAVE_PRODUCT = "SAVE_PRODUCT";
 export const SEARCH_PRODUCT = "SEARCH_PRODUCT";
+export const GET_FORNISSUER_BY_NAME = "GET_FORNISSUER_BY_NAME";
+export const SAVE_FOURNISSEUR = "SAVE_FOURNISSEUR";
+export const DELETE_FOURNISSEUR = "DELETE_FOURNISSEUR";
 
 export const URL_API = "http://localhost:8070";
 
@@ -44,7 +47,17 @@ export const saveProduct = (values) => (dispatch) => {
     });
   });
 };
-
+export const saveFournisseur = (values) => (dispatch) => {
+  return new Promise((resolve) => {
+    axios.post(`${URL_API}/manager/saveFournisseur`, values).then((res) => {
+      dispatch({
+        type: SAVE_FOURNISSEUR,
+        payload: res.data,
+      });
+      resolve(res.data);
+    });
+  });
+};
 export const searchProducts = (values) => (dispatch) => {
   return new Promise((resolve) => {
     axios.post(`${URL_API}/manager/productsCriteria`, values).then((res) => {
@@ -57,6 +70,17 @@ export const searchProducts = (values) => (dispatch) => {
   });
 };
 
+export const getFournisseurByName = (nom) => (dispatch) => {
+  return new Promise((resolve) => {
+    axios.get(`${URL_API}/manager/findFournisseurByName/${nom}`).then((res) => {
+      dispatch({
+        type: GET_FORNISSUER_BY_NAME,
+        payload: res.data,
+      });
+      resolve(res.data);
+    });
+  });
+};
 export const getGammeList = () => (dispatch) => {
   axios.get(`${URL_API}/manager/gammes`).then((res) => {
     dispatch({
@@ -102,17 +126,24 @@ export const addProductToCart = (uid, productId) => (dispatch) => {
   });
 };
 
-export const deleteProductFromCart = (uid, productId) => (dispatch) => {
+export const deleteProduit = (idProduit) => (dispatch) => {
+  axios.delete(`${URL_API}/manager/products/${idProduit}`).then((res) => {
+    dispatch({
+      type: DELETE_PRODUCT,
+      payload: res.data,
+    });
+  });
+};
+export const deleteFournisseur = (idFournisseur) => (dispatch) => {
   axios
-    .post("/api/ecommerce/delete-from-cart", { uid, productId })
+    .delete(`${URL_API}/manager/fournisseur/${idFournisseur}`)
     .then((res) => {
       dispatch({
-        type: DELETE_PRODUCT_FROM_CART,
+        type: DELETE_FOURNISSEUR,
         payload: res.data,
       });
     });
 };
-
 export const updateCartAmount = (uid, productId, amount) => (dispatch) => {
   console.log(uid, productId, amount);
   axios

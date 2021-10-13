@@ -15,9 +15,12 @@ import { useDropzone } from "react-dropzone";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { getFornisseurList } from "app/redux/actions/EcommerceActions";
+import {
+  getFornisseurList,
+  getFournisseurByName,
+} from "app/redux/actions/EcommerceActions";
 import AutoCompleteInput from "app/views/inputs/inputAutoComplete";
-import InputTextField from "app/views/inputs/inputTextField"
+import InputTextField from "app/views/inputs/inputTextField";
 const usestyles = makeStyles(({ palette, ...theme }) => ({
   dropZone: {
     transition: "all 350ms ease-in-out",
@@ -28,62 +31,53 @@ const usestyles = makeStyles(({ palette, ...theme }) => ({
   },
 }));
 
-const FournisseurFilter= () => {
-const dispatch = useDispatch()
-useEffect(() => {
-    dispatch(getFornisseurList())
-    }, []);
+const FournisseurFilter = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getFornisseurList());
+  }, []);
 
   const handleSubmit = async (values, { isSubmitting }) => {
-    console.log(values);
+    dispatch(getFournisseurByName(values?.name));
   };
 
-
   return (
-      <Card elevation={3} className="mb-4">
-        <Formik
-          onSubmit={handleSubmit}
-          enableReinitialize={true}
-          initialValues={{}}
-        >
-          {({
-           values,
-           handleSubmit
-          }) => (
-            <form className="p-4" onSubmit={handleSubmit}>
-              {console.log('valuees', values)}
-              <Grid container justify="flex-start" spacing={1}>
-                <Grid item  sm={3} xs={6}>
+    <Card elevation={3} className="mb-4">
+      <Formik
+        onSubmit={handleSubmit}
+        enableReinitialize={true}
+        initialValues={{}}
+      >
+        {({ values, handleSubmit }) => (
+          <form className="p-4" onSubmit={handleSubmit}>
+            {console.log("valuees", values)}
+            <Grid container justify="flex-start" spacing={1}>
+              <Grid item sm={3} xs={6}>
                 <Field
-                    component={InputTextField}
-                    className="mb-4"
-                    label='Name'
-                    name='name'
-                    variant="outlined"
-                    size="small"
-                  />
-                  </Grid> 
-                  <Grid item sm={3} xs={6}>
-                     <Button
-                        className="mb-4 px-12"
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                    >
-
-                     Recherche
-                    </Button>
-             </Grid>
+                  component={InputTextField}
+                  className="mb-4"
+                  label="Name"
+                  name="name"
+                  variant="outlined"
+                  size="small"
+                />
               </Grid>
-
-           
-            </form>
-          )}
-        </Formik>
-      </Card>
+              <Grid item sm={3} xs={6}>
+                <Button
+                  className="mb-4 px-12"
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
+                  Recherche
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        )}
+      </Formik>
+    </Card>
   );
 };
-
-
 
 export default FournisseurFilter;

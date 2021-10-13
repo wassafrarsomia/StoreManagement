@@ -2,19 +2,21 @@ import {
   GET_PRODUCT_LIST,
   GET_CART_LIST,
   ADD_PRODUCT_TO_CART,
-  DELETE_PRODUCT_FROM_CART,
   UPDATE_CART_AMOUNT,
   GET_FORNISSUER_LIST,
   GET_GAMME_LIST,
   GET_SOUS_GAMME_LIST,
   GET_UNIT_LIST,
   SEARCH_PRODUCT,
+  GET_FORNISSUER_BY_NAME,
 } from "../actions/EcommerceActions";
 
 const initialState = {
   productList: [],
   cartList: [],
   fournisseurs: [],
+  fournisseursByName: [],
+
   gammes: [],
   sousGammes: [],
   unites: [],
@@ -59,18 +61,13 @@ const EcommerceReducer = function (state = initialState, action) {
         unites: action.payload,
       };
     }
-    case ADD_PRODUCT_TO_CART: {
+    case GET_FORNISSUER_BY_NAME: {
       return {
         ...state,
-        cartList: [...action.payload],
+        fournisseursByName: action.payload,
       };
     }
-    case DELETE_PRODUCT_FROM_CART: {
-      return {
-        ...state,
-        cartList: [...action.payload],
-      };
-    }
+
     case UPDATE_CART_AMOUNT: {
       return {
         ...state,
