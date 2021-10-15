@@ -14,9 +14,20 @@ import * as yup from "yup";
 import AutoCompleteInput from "app/views/inputs/inputAutoComplete";
 import InputTextField from "app/views/inputs/inputTextField";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { saveChantier } from "app/redux/actions/EcommerceActions";
+import ConfirmationDialog from "matx/components/ConfirmationDialog";
 const ChantierForm = () => {
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+
   const handleSubmit = async (values, { isSubmitting }) => {
     console.log(values);
+    dispatch(saveChantier(values)).then((res) => {
+      if (res.id) {
+        setOpen(true);
+      }
+    });
   };
   const history = useHistory();
 
@@ -58,7 +69,7 @@ const ChantierForm = () => {
                     component={InputTextField}
                     className="mb-4"
                     label="Nom"
-                    name="nom"
+                    name="name"
                     variant="outlined"
                     size="small"
                   />
@@ -101,24 +112,18 @@ const ChantierForm = () => {
           )}
         </Formik>
       </Card>
+      <ConfirmationDialog
+        open={open}
+        onYesClick={() => history.push("/pages/chantier-list")}
+        text={"Ajout effectuée avec succès"}
+        ok={"Okay"}
+      />
     </div>
   );
 };
 
-const chantierSchema = yup.object().shape({
-  name: yup.string().required("${path} is required"),
-  price: yup.number().required("${path} is required"),
-  category: yup.string().required("${path} is required"),
-  quantity: yup.number().required("${path} is required"),
-});
+const chantierSchema = yup.object().shape({});
 
-const initialValues = {
-  name: "",
-  sku: "",
-  price: "",
-  category: "",
-  quantity: "",
-};
+const initialValues = {};
 
-const categoryList = ["Electronics", "Clothes", "Toys", "Books", "Utensils"];
 export default ChantierForm;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Breadcrumb } from "matx";
 import MUIDataTable from "mui-datatables";
 import {
@@ -12,12 +12,37 @@ import {
 import { Link } from "react-router-dom";
 import ChantierFilter from "./ChantierFilter";
 import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteChantier,
+  searchChantier,
+} from "app/redux/actions/EcommerceActions";
+import ConfirmationDialog from "matx/components/ConfirmationDialog";
 
 const ChantierList = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const [open, setOpen] = useState(false);
+  const [idChantier, setIdChantier] = useState(null);
+  const [selectItem, setSelectItem] = useState();
+
+  const { chantierList } = useSelector((state) => {
+    return {
+      chantierList: state.ecommerce?.chantierList,
+    };
+  });
+  const handleDelete = (id) => {
+    setOpen(true);
+    setIdChantier(id);
+  };
+  const handleEdit = (row) => {
+    history.push("/pages/new-chantier", { row });
+    setSelectItem(row);
+  };
   const columns = [
     {
-      name: "nom", // field name in the row object
+      name: "name", // field name in the row object
       label: "Nom", // column title that will be shown in table
       options: {
         filter: true,
@@ -36,12 +61,12 @@ const ChantierList = () => {
         customBodyRenderLite: (dataIndex) => (
           <div className="flex items-center">
             <div className="flex-grow"></div>
-            <Link to="/pages/new-customer">
-              <IconButton>
-                <Icon>edit</Icon>
-              </IconButton>
-            </Link>
             <IconButton>
+              <Icon>edit</Icon>
+            </IconButton>
+            <IconButton
+              onClick={() => handleDelete(chantierList[dataIndex]?.id)}
+            >
               <Icon>delete</Icon>
             </IconButton>
           </div>
@@ -97,19 +122,22 @@ const ChantierList = () => {
           />
         </div>
       </div>
+      <ConfirmationDialog
+        open={open}
+        onYesClick={async () => {
+          await dispatch(deleteChantier(idChantier));
+          dispatch(searchChantier({}));
+          setOpen(false);
+        }}
+        onConfirmDialogClose={() => {
+          setOpen(false);
+          setIdChantier(null);
+        }}
+        text={"Etes vous sûrs ?"}
+        ok={"oui"}
+      />
     </div>
   );
 };
-
-const chantierList = [
-  {
-    nom: "chantier ",
-    chefChantier: "Chef A",
-  },
-  {
-    nom: "chantier",
-    chefChantier: "Chef A",
-  },
-];
 
 export default ChantierList;

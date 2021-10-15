@@ -15,7 +15,10 @@ import { useDropzone } from "react-dropzone";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { getFornisseurList } from "app/redux/actions/EcommerceActions";
+import {
+  getFornisseurList,
+  searchChantier,
+} from "app/redux/actions/EcommerceActions";
 import AutoCompleteInput from "app/views/inputs/inputAutoComplete";
 import InputTextField from "app/views/inputs/inputTextField";
 const usestyles = makeStyles(({ palette, ...theme }) => ({
@@ -35,7 +38,7 @@ const ChantierFilter = () => {
   }, []);
 
   const handleSubmit = async (values, { isSubmitting }) => {
-    console.log(values);
+    dispatch(searchChantier(values));
   };
 
   return (
@@ -54,7 +57,7 @@ const ChantierFilter = () => {
                   component={InputTextField}
                   className="mb-4"
                   label="Nom"
-                  name="nom"
+                  name="name"
                   variant="outlined"
                   size="small"
                 />
@@ -64,7 +67,7 @@ const ChantierFilter = () => {
                   component={InputTextField}
                   className="mb-4"
                   label="Chef projet"
-                  name="chefProjet"
+                  name="chefChantier"
                   variant="outlined"
                   size="small"
                 />

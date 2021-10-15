@@ -14,7 +14,7 @@ import * as yup from "yup";
 import AutoCompleteInput from "app/views/inputs/inputAutoComplete";
 import InputTextField from "app/views/inputs/inputTextField";
 import { useHistory } from "react-router";
-const ProductDeplace = () => {
+const ProductDeplace = ({ setOpen }) => {
   const handleSubmit = async (values, { isSubmitting }) => {
     console.log(values);
   };
@@ -61,6 +61,7 @@ const ProductDeplace = () => {
                   component={AutoCompleteInput}
                   label="Chantier Destination"
                   name="chantierDestination"
+                  data={[]}
                   className="mb-4"
                   variant="outlined"
                   size="small"
@@ -84,7 +85,7 @@ const ProductDeplace = () => {
                   className="mb-4 px-12"
                   variant="contained"
                   onClick={() => {
-                    history.push("/pages/product-list");
+                    setOpen(false);
                   }}
                 >
                   Annuler

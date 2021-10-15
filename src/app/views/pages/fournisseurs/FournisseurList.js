@@ -129,7 +129,7 @@ const FournisseurList = () => {
         open={open}
         onYesClick={async () => {
           await dispatch(deleteFournisseur(idFournisseur));
-          await dispatch(getFournisseurByName());
+          dispatch(getFournisseurByName());
           setOpen(false);
         }}
         onConfirmDialogClose={() => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Breadcrumb, ConfirmationDialog } from "matx";
 import MUIDataTable from "mui-datatables";
 import {
@@ -30,6 +30,11 @@ const ProductList = () => {
       products: state.ecommerce?.products,
     };
   });
+  const [listOfPro, setListOfProd] = useState([]);
+  console.log("llllll", products);
+  useEffect(() => {
+    setListOfProd(products);
+  }, [products]);
   const handleConsult = (row) => {
     history.push("/pages/product-details", { row });
     setSelectItem(row);
@@ -144,7 +149,7 @@ const ProductList = () => {
                 </Grid>
               </Grid>
             }
-            data={products}
+            data={listOfPro}
             columns={columns}
             options={{
               //filterType: "textField",
@@ -164,10 +169,11 @@ const ProductList = () => {
       </div>
       <ConfirmationDialog
         open={open}
-        onYesClick={() => {
-          dispatch(deleteProduit(idProduit));
-          setOpen(false);
+        onYesClick={async () => {
+          await dispatch(deleteProduit(idProduit));
           dispatch(searchProducts({}));
+
+          setOpen(false);
         }}
         onConfirmDialogClose={() => {
           setOpen(false);

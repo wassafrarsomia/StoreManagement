@@ -9,6 +9,8 @@ import {
   GET_UNIT_LIST,
   SEARCH_PRODUCT,
   GET_FORNISSUER_BY_NAME,
+  GET_CHANTIER_DETAILS,
+  SEARCH_CHANTIER,
 } from "../actions/EcommerceActions";
 
 const initialState = {
@@ -16,10 +18,11 @@ const initialState = {
   cartList: [],
   fournisseurs: [],
   fournisseursByName: [],
-
   gammes: [],
   sousGammes: [],
   unites: [],
+  chantierDetails: [],
+  chantierList: [],
 };
 
 const EcommerceReducer = function (state = initialState, action) {
@@ -28,6 +31,12 @@ const EcommerceReducer = function (state = initialState, action) {
       return {
         ...state,
         products: action.payload,
+      };
+    }
+    case SEARCH_CHANTIER: {
+      return {
+        ...state,
+        chantierList: action.payload,
       };
     }
     case GET_PRODUCT_LIST: {
@@ -68,10 +77,10 @@ const EcommerceReducer = function (state = initialState, action) {
       };
     }
 
-    case UPDATE_CART_AMOUNT: {
+    case GET_CHANTIER_DETAILS: {
       return {
         ...state,
-        cartList: [...action.payload],
+        chantierDetails: action.payload,
       };
     }
     default: {

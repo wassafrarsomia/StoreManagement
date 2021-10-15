@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -14,11 +14,23 @@ import {
 import { Breadcrumb } from "matx";
 import { useHistory, useLocation } from "react-router-dom";
 import ProductDeplace from "./ProductDeplace";
+import { useDispatch, useSelector } from "react-redux";
+import { getChantierByProduct } from "app/redux/actions/EcommerceActions";
+import DataGrid from "../DataGrid";
 const ProductDetails = () => {
   const history = useHistory();
   const [open, setOpen] = useState(false);
   const location = useLocation();
   console.log("statee", location);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getChantierByProduct(location?.state?.row?.reference));
+  }, []);
+  const { chantierList } = useSelector((state) => {
+    return {
+      chantierList: state.ecommerce?.chantierDetails,
+    };
+  });
   const info = [
     {
       title: "Rference",
@@ -82,16 +94,7 @@ const ProductDetails = () => {
           <Card elevation={3}>
             <h5 className="p-4 m-0">Chantier list</h5>
             <Divider />
-            <Table className="mb-4">
-              <TableBody>
-                {chantierList.map((item, ind) => (
-                  <TableRow key={ind}>
-                    <TableCell className="pl-4">{item.title}</TableCell>
-                    <TableCell>{item.value}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <DataGrid data={chantierList || []} columns={columns} />
           </Card>
         </Grid>
       </Grid>
@@ -102,6 +105,14 @@ const ProductDetails = () => {
   );
 };
 
-const chantierList = [];
-
+const columns = [
+  {
+    label: "Chantier",
+    dataField: "chantier?.name",
+  },
+  {
+    label: "QTE",
+    dataField: "qte",
+  },
+];
 export default ProductDetails;
